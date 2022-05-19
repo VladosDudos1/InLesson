@@ -31,16 +31,17 @@ class SplashActivity : AppCompatActivity() {
                 Case.chooseList = it
             }, {
                 Toast.makeText(this, "first game isn't available", Toast.LENGTH_SHORT).show()
-            })
-        var dispWho = App.dm.api
-            .getWhoGame()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Case.whoList = it
             }, {
-                Toast.makeText(this, "second game isn't available", Toast.LENGTH_SHORT).show()
+                var dispWho = App.dm.api
+                    .getWhoGame()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Case.whoList = it
+                    }, {
+                        Toast.makeText(this, "second game isn't available", Toast.LENGTH_SHORT).show()
+                    })
             })
-        Handler().postDelayed({ startActivity(Intent(this, MainActivity::class.java)) }, 700)
+        Handler().postDelayed({ startActivity(Intent(this, LoginActivity::class.java)) }, 300)
     }
 }
