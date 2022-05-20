@@ -14,5 +14,12 @@ class RegistrationActivity : AppCompatActivity() {
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        onCLick()
+    }
+    private fun onCLick(){
+        binding.buttonToAuth.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
