@@ -1,7 +1,7 @@
 package english.lessons.inlesson.data
 
 import com.google.gson.GsonBuilder
-import english.lessons.inlesson.ui.models.GamesList
+import english.lessons.inlesson.ui.models.GameList
 import english.lessons.inlesson.ui.models.WhoGame
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -12,7 +12,7 @@ import retrofit2.http.GET
 interface Api  {
 
     @GET("choose")
-    fun getChooseGame() : Observable<GamesList>
+    fun getChooseGame() : Observable<GameList>
 
     @GET("who")
     fun getWhoGame() : Observable<WhoGame>
