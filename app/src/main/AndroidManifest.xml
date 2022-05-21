@@ -15,10 +15,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activities.RegistrationActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.SplashActivity"
             android:exported="true"

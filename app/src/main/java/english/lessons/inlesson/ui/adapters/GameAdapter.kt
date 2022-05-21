@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import english.lessons.inlesson.R
 import english.lessons.inlesson.databinding.GameItemBinding
 import english.lessons.inlesson.ui.models.GamesList
@@ -26,10 +27,18 @@ class GameAdapter(var choose: GamesList, var who: WhoGame) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: GameVH, position: Int) {
-        if (position == 0)
+        if (position == 0) {
+            Glide.with(binding.imgGame)
+                .load("https://drive.google.com/file/d/18xWjj1t5FXwx8it8NUCVi6TQkRRiim0L/view")
+                .into(binding.imgGame)
             binding.gameNameTxt.text = "Выбери одно"
-        else if (position == 1)
+        }
+        else if (position == 1) {
+            Glide.with(binding.imgGame)
+                .load("https://drive.google.com/file/d/1ACWG6wiIHjBvf1GrPZvhJMOS2PL_u3lq/view")
+                .into(binding.imgGame)
             binding.gameNameTxt.text = "Угадай кто"
+        }
     }
 
     override fun getItemCount(): Int = 2

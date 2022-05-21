@@ -9,8 +9,12 @@
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_main.xml" value="0.23692307692307693" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_splash.xml" value="0.23692307692307693" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_item.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.408" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5041666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4088541666666667" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.4088541666666667" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.5041666666666667" />
+        <entry key="app/src/main/res/layout/game_item.xml" value="0.3828125" />
       </map>
     </option>
   </component>

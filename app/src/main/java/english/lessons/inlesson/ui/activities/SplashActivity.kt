@@ -5,10 +5,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import english.lessons.inlesson.app.App
 import english.lessons.inlesson.databinding.ActivitySplashBinding
 import english.lessons.inlesson.ui.Case
+import english.lessons.inlesson.ui.Case.user
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -23,25 +27,12 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dispChoose = App.dm.api
-            .getChooseGame()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Case.chooseList = it
-            }, {
-                Toast.makeText(this, "first game isn't available", Toast.LENGTH_SHORT).show()
-            }, {
-                var dispWho = App.dm.api
-                    .getWhoGame()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        Case.whoList = it
-                    }, {
-                        Toast.makeText(this, "second game isn't available", Toast.LENGTH_SHORT).show()
-                    })
-            })
-        Handler().postDelayed({ startActivity(Intent(this, LoginActivity::class.java)) }, 300)
+        Handler().postDelayed({
+            if (App.dm.isLogin()) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+        }, 300)
     }
 }
