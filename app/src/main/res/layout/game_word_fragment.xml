@@ -12,11 +12,12 @@
         android:maxLines="5"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        android:visibility="invisible"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline4" />
+
 
     <ImageView
         android:id="@+id/helpBtn"
@@ -24,69 +25,10 @@
         android:layout_height="32dp"
         android:layout_margin="24dp"
         android:src="@drawable/ic_baseline_help_24"
-        app:layout_constraintBottom_toTopOf="@+id/question_img"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/purple_700" />
-
-    <ImageView
-        android:id="@+id/question_img"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_margin="32dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/answer1_img"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <ImageView
-        android:id="@+id/answer2_img"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <ImageView
-        android:id="@+id/answer3_img"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
-
-    <ImageView
-        android:id="@+id/answer4_img"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_answer"
@@ -106,6 +48,66 @@
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer1_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/purple_700"
+        android:text="answer1"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer2_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/purple_700"
+        android:text="answer2"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer3_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/purple_700"
+        android:text="answer3"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer4_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/purple_700"
+        android:text="answer4"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/answer_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -119,13 +121,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_answer" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -146,13 +147,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.90" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

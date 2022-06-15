@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class DataManager(private val baseContext: Context){
-
-    val api = Api.createApi()
-
     private val shared: SharedPreferences = baseContext.getSharedPreferences("cum", Context.MODE_PRIVATE)
 
     fun isLogin(): Boolean = shared.getBoolean("isLogin", false)

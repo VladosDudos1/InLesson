@@ -10,9 +10,11 @@
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_main.xml" value="0.23692307692307693" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_registration.xml" value="0.24618055555555557" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_splash.xml" value="0.23692307692307693" />
-        <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_choose_fragment.xml" value="0.1701388888888889" />
+        <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_choose_fragment.xml" value="0.25" />
+        <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_image_fragment.xml" value="0.20902777777777778" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_item.xml" value="0.240625" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_who_fragment.xml" value="0.18715277777777778" />
+        <entry key="..\:/vlad/InLesson/app/src/main/res/layout/game_word_fragment.xml" value="0.20902777777777778" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/gmame_who_fragment.xml" value="0.1" />
       </map>
     </option>

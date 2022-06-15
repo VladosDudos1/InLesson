@@ -1,28 +1,18 @@
 package english.lessons.inlesson.ui.activities
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import english.lessons.inlesson.app.App
 import english.lessons.inlesson.databinding.ActivityMainBinding
-import english.lessons.inlesson.ui.Case.chooseList
 import english.lessons.inlesson.ui.Case.user
-import english.lessons.inlesson.ui.Case.whoList
 import english.lessons.inlesson.ui.adapters.GameAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
 import android.content.DialogInterface
 import android.webkit.URLUtil
@@ -40,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         requests()
         setUser()
         setLinearAdapter()
@@ -93,25 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requests() {
-        val dispChoose = App.dm.api
-            .getChooseGame()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                chooseList = it
-            }, {
-                println(it.message)
-            })
 
-        var dispWho = App.dm.api
-            .getWhoGame()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                whoList = it
-            }, {
-                println(it.message)
-            })
     }
 
     private fun setUser() {

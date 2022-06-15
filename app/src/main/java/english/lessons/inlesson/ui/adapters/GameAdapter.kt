@@ -29,17 +29,25 @@ class GameAdapter(val context: Context) : RecyclerView.Adapter<GameAdapter.GameV
     }
 
     override fun onBindViewHolder(holder: GameVH, position: Int) {
-        if (position == 0) {
-            Glide.with(binding.imgGame)
-                .load("https://firebasestorage.googleapis.com/v0/b/inlesson-d6a94.appspot.com/o/game.png?alt=media&token=75386a36-633a-4418-86b1-ae4471579448")
-                .into(binding.imgGame)
-            binding.gameNameTxt.text = "Выбери одно"
-        }
-        else if (position == 1) {
-            Glide.with(binding.imgGame)
-                .load("https://firebasestorage.googleapis.com/v0/b/inlesson-d6a94.appspot.com/o/123.jpg?alt=media&token=4087994c-a3df-4b71-88a6-9a5e8c96a3fd")
-                .into(binding.imgGame)
-            binding.gameNameTxt.text = "Угадай кто"
+        when (position) {
+            0 -> {
+                Glide.with(binding.imgGame)
+                    .load("https://firebasestorage.googleapis.com/v0/b/inlesson-d6a94.appspot.com/o/123.jpg?alt=media&token=4087994c-a3df-4b71-88a6-9a5e8c96a3fd")
+                    .into(binding.imgGame)
+                binding.gameNameTxt.text = "Explain the picture"
+            }
+            1 -> {
+                Glide.with(binding.imgGame)
+                    .load("https://firebasestorage.googleapis.com/v0/b/inlesson-d6a94.appspot.com/o/1.jpg?alt=media&token=41675ade-3041-421a-9cb0-dcf2b6ae4f3c")
+                    .into(binding.imgGame)
+                binding.gameNameTxt.text = "Explain the word"
+            }
+            2 -> {
+                Glide.with(binding.imgGame)
+                    .load("https://firebasestorage.googleapis.com/v0/b/inlesson-d6a94.appspot.com/o/game.png?alt=media&token=75386a36-633a-4418-86b1-ae4471579448")
+                    .into(binding.imgGame)
+                binding.gameNameTxt.text = "Who/what is it"
+            }
         }
 
         binding.gameLayout.setOnClickListener {
@@ -48,7 +56,7 @@ class GameAdapter(val context: Context) : RecyclerView.Adapter<GameAdapter.GameV
         }
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = 3
 
 
     class GameVH(view: View): RecyclerView.ViewHolder(view)

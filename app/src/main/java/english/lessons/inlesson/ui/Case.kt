@@ -1,13 +1,12 @@
 package english.lessons.inlesson.ui
 
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import english.lessons.inlesson.ui.models.GameList
-import english.lessons.inlesson.ui.models.WhoGame
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 object Case {
-    var chooseList: GameList?=null
-    var whoList: WhoGame?=null
     var user: FirebaseUser?= FirebaseAuth.getInstance().currentUser
     var gameType: Int?=null
 
