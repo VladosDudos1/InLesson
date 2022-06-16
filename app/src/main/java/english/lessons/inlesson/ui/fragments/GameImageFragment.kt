@@ -53,7 +53,7 @@ class GameImageFragment : Fragment() {
     }
 
     private fun setQuestion(ques: String) {
-        if (index <= 6) {
+        if (index <= 20) {
             binding.questionTxt.text = ques
             store.child("Game").child("3").child("tasks").child(index.toString()).child("answers")
                 .child("0")
@@ -126,7 +126,7 @@ class GameImageFragment : Fragment() {
                     if (num == r.result.child("help").value.toString().toInt()) {
                         correctAnswers++
                     }
-                    if (index != 7) {
+                    if (index != 21) {
                         store.child("Game").child("3").get()
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {

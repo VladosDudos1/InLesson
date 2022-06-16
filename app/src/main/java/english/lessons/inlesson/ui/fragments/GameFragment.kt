@@ -274,7 +274,7 @@ class GameFragment : Fragment() {
     }
 
     private fun setRandom(): Int {
-        return nextInt(1, 7)
+        return nextInt(1, 21)
     }
 
     private fun startGame() {

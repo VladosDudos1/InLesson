@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/InLesson/app/src/main/res/layout/game_choose_fragment.xml" value="0.21875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/InLesson/app/src/main/res/layout/game_image_fragment.xml" value="0.21875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/InLesson/app/src/main/res/layout/game_item.xml" value="0.33" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/drawable/edit_shape.xml" value="0.31979166666666664" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/drawable/splash.xml" value="0.25677083333333334" />
         <entry key="..\:/vlad/InLesson/app/src/main/res/layout/activity_game.xml" value="0.1701388888888889" />
