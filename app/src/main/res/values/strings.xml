@@ -2,4 +2,5 @@
     <string name="app_name">In Lesson</string>
     <string name="logo">Logo</string>
     <string name="imagegame">imageGame</string>
+    <string name="forgetPassword">Забыли пароль?</string>
 </resources>

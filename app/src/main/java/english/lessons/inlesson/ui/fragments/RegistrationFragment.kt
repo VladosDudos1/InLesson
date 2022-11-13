@@ -1,43 +1,56 @@
-package english.lessons.inlesson.ui.activities
+package english.lessons.inlesson.ui.fragments
 
-import android.content.ContentValues.TAG
-import android.os.Binder
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import english.lessons.inlesson.databinding.ActivityRegistrationBinding
+import english.lessons.inlesson.R
+import english.lessons.inlesson.databinding.RegistrationFragmentBinding
 import english.lessons.inlesson.ui.Case
+import english.lessons.inlesson.ui.Case.backPressType
 import english.lessons.inlesson.ui.models.User
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationFragment : Fragment() {
 
-    private lateinit var binding: ActivityRegistrationBinding
+    private lateinit var binding: RegistrationFragmentBinding
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var store = FirebaseDatabase.getInstance().reference
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = RegistrationFragmentBinding.bind(
+            inflater.inflate(R.layout.registration_fragment, container, false)
+        )
+        return binding.root
+    }
 
-        binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         onCLick()
     }
+
     private fun onCLick(){
         binding.buttonToAuth.setOnClickListener {
-            onBackPressed()
+            requireActivity().supportFragmentManager.popBackStack()
         }
         binding.buttonRegistration.setOnClickListener {
             registration()
         }
     }
+
     private fun registration(){
         val nick = binding.editNick.text.toString()
         val mail = binding.editLogin.text.toString()
@@ -47,22 +60,22 @@ class RegistrationActivity : AppCompatActivity() {
 
         if (checkInput()){
             auth.createUserWithEmailAndPassword(mail, password)
-                .addOnCompleteListener(this) {task ->
+                .addOnCompleteListener(requireActivity()) {task ->
                     if (task.isSuccessful) {
-                        Log.d(TAG, "createUserWithEmail:success")
+                        Log.d(ContentValues.TAG, "createUserWithEmail:success")
                         val user = auth.currentUser
                         updateUI(user)
 
                         store.child("users").child(Case.user!!.uid).setValue(userN)
-                            .addOnCompleteListener(this) { res ->
+                            .addOnCompleteListener(requireActivity()) { res ->
                                 if (res.isSuccessful){
-                                    onBackPressed()
+                                    requireActivity().onBackPressed()
                                 }
                                 else makeToast(res.exception!!.message.toString())
                             }
                     }
                     else {
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
                         updateUI(null)
                     }
                 }
@@ -84,7 +97,7 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun makeToast(m: String) {
-        Toast.makeText(this, m, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, m, Toast.LENGTH_SHORT).show()
     }
 
     private fun updateUI(account: FirebaseUser?) {

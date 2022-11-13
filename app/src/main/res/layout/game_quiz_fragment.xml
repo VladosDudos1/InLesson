@@ -23,19 +23,21 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/answer2_btn"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop" />
+        android:layout_margin="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.25" />
 
     <ImageView
         android:id="@+id/answer3_btn"
@@ -45,7 +47,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:scaleType="centerCrop" />
 
     <ImageView
@@ -56,7 +58,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:scaleType="centerCrop" />
 
     <androidx.constraintlayout.widget.Guideline

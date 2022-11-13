@@ -1,19 +1,20 @@
 package english.lessons.inlesson.ui.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import english.lessons.inlesson.R
 import english.lessons.inlesson.databinding.GameItemBinding
-import english.lessons.inlesson.ui.Case
-import english.lessons.inlesson.ui.activities.GameActivity
 
-class GameAdapter(val context: Context) : RecyclerView.Adapter<GameAdapter.GameVH>() {
+class GameAdapter(private val onClickListener: OnClickListener,  val context: Context) : RecyclerView.Adapter<GameAdapter.GameVH>() {
     private lateinit var binding: GameItemBinding
+    private lateinit var description: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameVH {
         binding = GameItemBinding.bind(
@@ -51,13 +52,25 @@ class GameAdapter(val context: Context) : RecyclerView.Adapter<GameAdapter.GameV
         }
 
         binding.gameLayout.setOnClickListener {
-            Case.gameType = position
-            context.startActivity(Intent(context, GameActivity::class.java))
+            onClickListener.click(position)
+        }
+        binding.imgInfo.setOnClickListener {
+            when (position){
+                0 -> description = "In this game you have to explain what you see in the picture. After that, the second player will choose an image from the presented list based on the description provided"
+                1 -> description = "In this game you have to explain the presented word. After that, the second player will choose a word from the presented words based on the explanation provided"
+                2 -> description = "In this game, you need to correctly translate all the tasks and select the appropriate pictures"
+            }
+            MaterialDialog(context)
+                .title(text = "Game description")
+                .message(text = description)
+                .show()
         }
     }
 
     override fun getItemCount(): Int = 3
 
-
+    interface OnClickListener{
+        fun click(data: Int)
+    }
     class GameVH(view: View): RecyclerView.ViewHolder(view)
 }

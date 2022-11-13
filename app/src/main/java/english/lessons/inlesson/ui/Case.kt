@@ -8,7 +8,6 @@ import java.util.*
 
 object Case {
     var user: FirebaseUser?= FirebaseAuth.getInstance().currentUser
-    var gameType: Int?=null
 
-    var correctAnswers = 0
+    var backPressType = 0
 }

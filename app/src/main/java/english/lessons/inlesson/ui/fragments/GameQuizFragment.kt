@@ -1,6 +1,5 @@
 package english.lessons.inlesson.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,13 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
-import english.lessons.inlesson.databinding.GameImageFragmentBinding
 import english.lessons.inlesson.R
+import english.lessons.inlesson.databinding.GameQuizFragmentBinding
+import english.lessons.inlesson.ui.Case.backPressType
 
-class GameImageFragment : Fragment() {
+class GameQuizFragment : Fragment() {
 
-    private lateinit var binding: GameImageFragmentBinding
+    private lateinit var binding: GameQuizFragmentBinding
     private var index = 1
     private var correctAnswers = 0
 
@@ -30,9 +30,9 @@ class GameImageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = GameImageFragmentBinding.bind(
+        binding = GameQuizFragmentBinding.bind(
             inflater.inflate(
-                R.layout.game_image_fragment, container, false
+                R.layout.game_quiz_fragment, container, false
             )
         )
         return binding.root
@@ -50,6 +50,7 @@ class GameImageFragment : Fragment() {
                 }
             }
         onClick()
+        backPressType = 0
     }
 
     private fun setQuestion(ques: String) {
@@ -156,7 +157,7 @@ class GameImageFragment : Fragment() {
                             .negativeButton(text = "main menu") {
                                 correctAnswers = 0
                                 it.cancel()
-                                requireActivity().finish()
+                                requireActivity().supportFragmentManager.popBackStack()
                             }
                             .cancelOnTouchOutside(false)
 
