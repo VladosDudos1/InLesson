@@ -19,10 +19,10 @@ import english.lessons.inlesson.ui.Case.user
 import english.lessons.inlesson.ui.adapters.GameAdapter
 import java.lang.Exception
 
-class GameFragment: Fragment(), GameAdapter.OnClickListener {
+class GameFragment : Fragment(), GameAdapter.OnClickListener {
 
     override fun click(data: Int) {
-        when (data){
+        when (data) {
             0 ->
                 changeFragment(GamePictureFragment())
             1 ->
@@ -40,7 +40,8 @@ class GameFragment: Fragment(), GameAdapter.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = GameFragmentBinding.bind(inflater.inflate(R.layout.game_fragment, container, false))
+        binding =
+            GameFragmentBinding.bind(inflater.inflate(R.layout.game_fragment, container, false))
         return binding.root
     }
 
@@ -52,6 +53,7 @@ class GameFragment: Fragment(), GameAdapter.OnClickListener {
         setUser()
         onClick()
     }
+
     private fun setLinearAdapter() {
         try {
             binding.rvGames.adapter = GameAdapter(this, requireContext())
@@ -72,6 +74,7 @@ class GameFragment: Fragment(), GameAdapter.OnClickListener {
                 .negativeButton { it.cancel() }
                 .show()
         }
+    }
 //        binding.profileCardImg.setOnClickListener {
 //            val et = EditText(this)
 //            val dialog: AlertDialog = AlertDialog.Builder(this)
@@ -94,19 +97,16 @@ class GameFragment: Fragment(), GameAdapter.OnClickListener {
 //                .create()
 //            dialog.show()
 //        }
-    }
+
 
     private fun setUser() {
         store.child("users").child(user!!.uid).get()
-            .addOnCompleteListener(requireActivity()) {
-                if (it.isSuccessful) {
-                    binding.nickName.text = it.result.child("name").value.toString()
-                }
+            .addOnCompleteListener {
+                binding.nickName.text = it.result.child("name").value.toString()
             }
-
     }
 
-    private fun changeFragment(fmt: Fragment){
+    private fun changeFragment(fmt: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fmt)
             .addToBackStack(null)

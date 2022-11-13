@@ -65,6 +65,17 @@ class GameAdapter(private val onClickListener: OnClickListener,  val context: Co
                 .message(text = description)
                 .show()
         }
+        binding.imgInfo.setOnClickListener {
+            when (position){
+                0 -> description = "In this game you have to explain what you see in the picture. After that, the second player will choose an image from the presented list based on the description provided"
+                1 -> description = "In this game you have to explain the presented word. After that, the second player will choose a word from the presented words based on the explanation provided"
+                2 -> description = "In this game, you need to correctly translate all the tasks and select the appropriate pictures"
+            }
+            MaterialDialog(context)
+                .title(text = "Game description")
+                .message(text = description)
+                .show()
+        }
     }
 
     override fun getItemCount(): Int = 3

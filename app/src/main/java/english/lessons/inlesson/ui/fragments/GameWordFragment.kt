@@ -204,7 +204,7 @@ class GameWordFragment : Fragment() {
     }
 
     private fun setRandom(): Int {
-        return Random.nextInt(1, 7)
+        return Random.nextInt(1, 21)
     }
 
     private fun startGame() {

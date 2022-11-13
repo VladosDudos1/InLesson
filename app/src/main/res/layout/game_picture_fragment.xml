@@ -32,7 +32,7 @@
     <ImageView
         android:id="@+id/question_img"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="280dp"
         android:layout_margin="32dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
