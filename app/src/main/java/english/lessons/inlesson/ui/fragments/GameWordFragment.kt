@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
@@ -33,6 +34,8 @@ class GameWordFragment : Fragment() {
     private lateinit var answer3: String
     private lateinit var answer4: String
 
+    private lateinit var activityForDialogs: FragmentActivity
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +51,8 @@ class GameWordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activityForDialogs = requireActivity()
 
         onClick()
         startGame()
@@ -94,7 +99,7 @@ class GameWordFragment : Fragment() {
         binding.helpBtn.setOnClickListener {
             store.child("Game").child("2").get()
                 .addOnCompleteListener { r ->
-                    MaterialDialog(requireActivity())
+                    MaterialDialog(activityForDialogs)
                         .title(text = "Prompt")
                         .cancelable(true)
                         .positiveButton(text = "Close prompt") {
@@ -126,16 +131,17 @@ class GameWordFragment : Fragment() {
                     .isNotEmpty()
             ) {
                 store.child("room2").child("resultFirst").setValue(binding.etAnswer.text.toString())
-                val dialog = MaterialDialog(requireActivity())
+                val dialog = MaterialDialog(activityForDialogs)
                     .cancelable(false)
                     .title(text = "Thank you, waiting to the next player")
                     .negativeButton(text = "Leave") {
-                        requireActivity().supportFragmentManager.popBackStack()
+                        activityForDialogs.supportFragmentManager.popBackStack()
                     }
                 dialog.show { }
 
                 val timer = Timer()
                 timer.scheduleAtFixedRate(object : TimerTask() {
+                    var title = ""
                     override fun run() {
                         store.child("room2").child("resultSecond").get()
                             .addOnCompleteListener { f ->
@@ -145,36 +151,29 @@ class GameWordFragment : Fragment() {
                                         isCorrect =
                                             f.result.value.toString() == question
                                         if (r.result.value.toString().isNotEmpty()) {
-                                            if (isCorrect) {
-                                                timer.cancel()
-                                                dialog.cancel()
-
-                                                MaterialDialog(requireActivity())
-                                                    .cancelable(false)
-                                                    .title(text = "The player got you!")
-                                                    .negativeButton(text = "Leave") {
-                                                        requireActivity().supportFragmentManager.popBackStack()
-                                                        resultOfGame()
-                                                    }
-                                                    .show()
+                                            dialog.cancel()
+                                            title = if (isCorrect) {
+                                                "The player got you!"
                                             } else {
-                                                timer.cancel()
-                                                MaterialDialog(requireActivity())
-                                                    .cancelable(false)
-                                                    .title(text = "The player did not understand you")
-                                                    .negativeButton(text = "Leave") {
-                                                        requireActivity().supportFragmentManager.popBackStack()
-                                                        resultOfGame()
-                                                    }
-                                                    .show()
+                                                "The player did not understand you"
                                             }
+                                            timer.cancel()
+                                            MaterialDialog(activityForDialogs)
+                                                .cancelable(false)
+                                                .title(text = title)
+                                                .negativeButton(text = "Leave") {
+                                                    it.cancel()
+                                                    activityForDialogs.supportFragmentManager.popBackStack()
+                                                    resultOfGame()
+                                                }
+                                                .show()
                                         }
                                     }
                             }
                     }
-                }, 2000, 3000)
+                }, 1500, 2000)
             } else Toast.makeText(
-                requireActivity(),
+                activityForDialogs,
                 "Answer can`t contain a question word or be blank",
                 Toast.LENGTH_SHORT
             ).show()
@@ -193,14 +192,15 @@ class GameWordFragment : Fragment() {
     private fun answerRes(ans: String){
         store.child("room2").child("resultSecond").setValue(ans)
         val title = if (ans == question) "Success, you`re right" else "Loose, you`re incorrect"
-        MaterialDialog(requireActivity())
+        MaterialDialog(activityForDialogs)
             .title(text = title)
             .cancelable(false)
             .positiveButton(text = "Close the game") {
-                requireActivity().supportFragmentManager.popBackStack()
+                it.cancel()
+                activityForDialogs.supportFragmentManager.popBackStack()
             }
             .show { }
-        Handler().postDelayed({ resultOfGame() }, 2800)
+        Handler().postDelayed({ resultOfGame() }, 2000)
     }
 
     private fun setRandom(): Int {
@@ -209,10 +209,10 @@ class GameWordFragment : Fragment() {
 
     private fun startGame() {
         store.child("Game").child("2").get()
-            .addOnCompleteListener(requireActivity()) {
+            .addOnCompleteListener(activityForDialogs) {
                 if (it.isSuccessful) {
                     store.child("room2").get()
-                        .addOnCompleteListener(requireActivity()) { r ->
+                        .addOnCompleteListener(activityForDialogs) { r ->
                             if (r.isSuccessful) {
                                 if (r.result.child("isEmpty").value.toString().toBoolean()) {
                                     vision1()
@@ -240,7 +240,7 @@ class GameWordFragment : Fragment() {
                                                             t.result.child("resultFirst").value.toString()
                                                     }
                                             } else {
-                                                requireActivity().runOnUiThread {
+                                                activityForDialogs.runOnUiThread {
                                                     binding.questionTxt.text = resF
                                                     binding.answer1Btn.isEnabled = true
                                                     binding.answer2Btn.isEnabled = true
@@ -250,7 +250,7 @@ class GameWordFragment : Fragment() {
                                                 timer.cancel()
                                             }
                                         }
-                                    }, 500, 2000)
+                                    }, 200, 1800)
                                 }
                             }
                         }

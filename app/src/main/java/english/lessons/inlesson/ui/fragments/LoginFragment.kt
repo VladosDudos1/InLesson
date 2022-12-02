@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import english.lessons.inlesson.R
 import english.lessons.inlesson.app.App
 import english.lessons.inlesson.databinding.LoginFragmentBinding
+import english.lessons.inlesson.ui.Case
 import english.lessons.inlesson.ui.Case.backPressType
 
 class LoginFragment : Fragment() {
@@ -64,6 +65,7 @@ class LoginFragment : Fragment() {
                         Log.d(ContentValues.TAG, "signInWithEmail:success")
                         val user = auth.currentUser
                         updateUI(user)
+                        Case.user = user
                         App.dm.endLogin()
                         changeFragment(GameFragment())
                     } else {

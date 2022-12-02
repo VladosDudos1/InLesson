@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import english.lessons.inlesson.R
 import english.lessons.inlesson.databinding.GamePictureFragmentBinding
 import english.lessons.inlesson.ui.Case.backPressType
+import english.lessons.inlesson.ui.activities.MainActivity
 import kotlin.random.Random.Default.nextInt
 import java.util.*
 
@@ -31,6 +33,8 @@ class GamePictureFragment : Fragment() {
     private lateinit var image3: String
     private lateinit var image4: String
 
+    private lateinit var activityForDialogs: FragmentActivity
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +50,8 @@ class GamePictureFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activityForDialogs = requireActivity()
 
         onClick()
         startGame()
@@ -104,7 +110,7 @@ class GamePictureFragment : Fragment() {
         binding.helpBtn.setOnClickListener {
             store.child("Game").child("1").get()
                 .addOnCompleteListener { r ->
-                    MaterialDialog(requireActivity())
+                    MaterialDialog(activityForDialogs)
                         .title(text = "Prompt")
                         .cancelable(true)
                         .positiveButton(text = "Close prompt") {
@@ -131,16 +137,18 @@ class GamePictureFragment : Fragment() {
             if (!binding.etAnswer.text.toString().contains(question) && binding.etAnswer.text.toString()
                     .isNotEmpty()) {
                 store.child("room").child("resultFirst").setValue(binding.etAnswer.text.toString())
-                val dialog = MaterialDialog(requireActivity())
+                val dialog = MaterialDialog(activityForDialogs)
                     .cancelable(false)
                     .title(text = "Thank you, waiting to the next player")
                     .negativeButton(text = "Leave") {
-                        requireActivity().supportFragmentManager.popBackStack()
+                        it.cancel()
+                        activityForDialogs.supportFragmentManager.popBackStack()
                     }
                 dialog.show { }
 
                 val timer = Timer()
                 timer.scheduleAtFixedRate(object : TimerTask() {
+                    var title = ""
                     override fun run() {
                         store.child("room").child("resultSecond").get()
                             .addOnCompleteListener { f ->
@@ -150,36 +158,29 @@ class GamePictureFragment : Fragment() {
                                         isCorrect =
                                             f.result.value.toString() == question
                                         if (r.result.value.toString().isNotEmpty()){
-                                            if (isCorrect) {
-                                                timer.cancel()
-                                                dialog.cancel()
-
-                                                MaterialDialog(requireActivity())
-                                                    .cancelable(false)
-                                                    .title(text = "The player got you!")
-                                                    .negativeButton(text = "Leave") {
-                                                        requireActivity().supportFragmentManager.popBackStack()
-                                                        resultOfGame()
-                                                    }
-                                                    .show()
+                                            dialog.cancel()
+                                            title = if (isCorrect) {
+                                                "The player got you!"
                                             } else {
-                                                timer.cancel()
-                                                MaterialDialog(requireActivity())
-                                                    .cancelable(false)
-                                                    .title(text = "The player did not understand you")
-                                                    .negativeButton(text = "Leave") {
-                                                        requireActivity().supportFragmentManager.popBackStack()
-                                                        resultOfGame()
-                                                    }
-                                                    .show()
+                                                "The player did not understand you"
                                             }
+                                            timer.cancel()
+                                            MaterialDialog(activityForDialogs)
+                                                .cancelable(false)
+                                                .title(text = title)
+                                                .negativeButton(text = "Leave") {
+                                                    it.cancel()
+                                                    activityForDialogs.supportFragmentManager.popBackStack()
+                                                    resultOfGame()
+                                                }
+                                                .show()
                                         }
                                     }
                             }
                     }
-                }, 2000, 3000)
+                }, 1500, 2000)
             } else Toast.makeText(
-                requireActivity(),
+                activityForDialogs,
                 "Answer can`t contain a question word or be blank",
                 Toast.LENGTH_SHORT
             ).show()
@@ -197,38 +198,29 @@ class GamePictureFragment : Fragment() {
 
     private fun answerRes(img: String){
         store.child("room").child("resultSecond").setValue(img)
-        if (img == question){
-            MaterialDialog(requireActivity())
-                .title(text = "Success, you`re right")
+        val title = if (img == question) "Success, you`re right" else "Loose, you`re incorrect"
+
+            MaterialDialog(activityForDialogs)
+                .title(text = title)
                 .cancelable(false)
                 .positiveButton (text = "Close the game") {
-                    requireActivity().supportFragmentManager.popBackStack()
+                    activityForDialogs.supportFragmentManager.popBackStack()
+                    it.cancel()
                 }
                 .show {  }
-        }
-        else {
-            MaterialDialog(requireActivity())
-                .title(text = "Loose, you`re incorrect")
-                .cancelable(false)
-                .negativeButton (text = "Close the game"){
-                    requireActivity().supportFragmentManager.popBackStack()
-                }
-                .show {  }
-        }
-
-        Handler().postDelayed({resultOfGame()}, 2800)
+        Handler().postDelayed({resultOfGame()}, 2000)
     }
 
     private fun setRandom(): Int {
-        return nextInt(1, 7)
+        return nextInt(1, 21)
     }
 
     private fun startGame() {
         store.child("Game").child("1").get()
-            .addOnCompleteListener(requireActivity()) {
+            .addOnCompleteListener(activityForDialogs) {
                 if (it.isSuccessful) {
                     store.child("room").get()
-                        .addOnCompleteListener(requireActivity()) { r ->
+                        .addOnCompleteListener(activityForDialogs) { r ->
                             if (r.isSuccessful) {
                                 if (r.result.child("isEmpty").value.toString().toBoolean()) {
                                     vision1()
@@ -260,7 +252,7 @@ class GamePictureFragment : Fragment() {
                                                             t.result.child("resultFirst").value.toString()
                                                     }
                                             } else {
-                                                requireActivity().runOnUiThread {
+                                                activityForDialogs.runOnUiThread {
                                                     binding.questionTxt.text = resF
                                                     binding.answer1Img.isEnabled = true
                                                     binding.answer2Img.isEnabled = true
@@ -270,7 +262,7 @@ class GamePictureFragment : Fragment() {
                                                 timer.cancel()
                                             }
                                         }
-                                    }, 500, 2000)
+                                    }, 200, 1800)
                                 }
                             }
                         }

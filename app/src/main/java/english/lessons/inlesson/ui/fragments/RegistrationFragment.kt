@@ -69,7 +69,7 @@ class RegistrationFragment : Fragment() {
                         store.child("users").child(Case.user!!.uid).setValue(userN)
                             .addOnCompleteListener(requireActivity()) { res ->
                                 if (res.isSuccessful){
-                                    requireActivity().onBackPressed()
+                                    requireActivity().supportFragmentManager.popBackStack()
                                 }
                                 else makeToast(res.exception!!.message.toString())
                             }
